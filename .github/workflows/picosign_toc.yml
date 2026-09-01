@@ -1,0 +1,22 @@
+name: picosign_toc
+
+on:
+  push:
+    paths:
+      - '**.md'
+
+permissions:
+  contents: write
+
+jobs:
+  generateTOC:
+    name: picosign_toc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Generate TOC
+        uses: technote-space/toc-generator@v4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

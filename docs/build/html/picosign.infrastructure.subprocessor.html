@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>picosign.infrastructure.subprocessor module &#8212; picosign https://github.com/vroncevic/picosign/releases documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=514cf933" />
+    
+    <script src="_static/documentation_options.js?v=0b6d1637"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="picosign.setup package" href="picosign.setup.html" />
+    <link rel="prev" title="picosign.infrastructure.command.sign_command_executor module" href="picosign.infrastructure.command.sign_command_executor.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="picosign.setup.html" title="picosign.setup package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="picosign.infrastructure.command.sign_command_executor.html" title="picosign.infrastructure.command.sign_command_executor module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">picosign https://github.com/vroncevic/picosign/releases documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >picosign</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="picosign.html" >picosign package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="picosign.infrastructure.html" accesskey="U">picosign.infrastructure package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">picosign.infrastructure.subprocessor module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-picosign.infrastructure.subprocessor">
+<span id="picosign-infrastructure-subprocessor-module"></span><h1>picosign.infrastructure.subprocessor module<a class="headerlink" href="#module-picosign.infrastructure.subprocessor" title="Link to this heading">¶</a></h1>
+<dl class="simple">
+<dt>Module</dt><dd><p>subprocessor.py</p>
+</dd>
+<dt>Copyright</dt><dd><p>Copyright (C) 2026 Vladimir Roncevic &lt;<a class="reference external" href="mailto:elektron&#46;ronca&#37;&#52;&#48;gmail&#46;com">elektron<span>&#46;</span>ronca<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;
+picosign is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+picosign is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along
+with this program. If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
+</dd>
+<dt>Info</dt><dd><p>Defines subprocessor adapter implementing ISubProcessor for UF2 operations.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">picosign.infrastructure.subprocessor.</span></span><span class="sig-name descname"><span class="pre">SubProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ILogger</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/picosign/infrastructure/subprocessor.html#SubProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Adapter that executes UF2 signature read and write operations.</p>
+<p>It defines:</p>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="line-block">
+<div class="line">UF2_MAGIC_START0 - UF2 header first magic number (0x0A324655).</div>
+<div class="line">UF2_MAGIC_START1 - UF2 header second magic number (0x9E5D5157).</div>
+<div class="line">UF2_MAGIC_END - UF2 block end magic number (0x0AB16F30).</div>
+<div class="line">CUSTOM_MARKER_HEADER - Signature marker prefix (b’SIG!’).</div>
+<div class="line">BLOCK_SIZE - Standard UF2 block size (512 bytes).</div>
+<div class="line">PADDING_START - Offset where padding starts in block (288).</div>
+<div class="line">PADDING_END - Offset where padding ends in block (508).</div>
+<div class="line">MAX_SIG_LEN - Maximum signature length in bytes (220).</div>
+<div class="line">_logger - Logger used to log operational messages.</div>
+</div>
+</dd>
+<dt class="field-even">methods<span class="colon">:</span></dt>
+<dd class="field-even"><div class="line-block">
+<div class="line">__init__ - Initializes the SubProcessor adapter.</div>
+<div class="line">run - Executes a UF2 signature sub-process.</div>
+<div class="line">is_initialized - Checks if the subprocessor is initialized.</div>
+<div class="line">__str__ - Returns the SubProcessor as string representation.</div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.BLOCK_SIZE">
+<span class="sig-name descname"><span class="pre">BLOCK_SIZE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">512</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.BLOCK_SIZE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.CUSTOM_MARKER_HEADER">
+<span class="sig-name descname"><span class="pre">CUSTOM_MARKER_HEADER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'SIG!'</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.CUSTOM_MARKER_HEADER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.MAX_SIG_LEN">
+<span class="sig-name descname"><span class="pre">MAX_SIG_LEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">220</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.MAX_SIG_LEN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.PADDING_END">
+<span class="sig-name descname"><span class="pre">PADDING_END</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">508</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.PADDING_END" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.PADDING_START">
+<span class="sig-name descname"><span class="pre">PADDING_START</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">288</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.PADDING_START" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_END">
+<span class="sig-name descname"><span class="pre">UF2_MAGIC_END</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">179400496</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_END" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_START0">
+<span class="sig-name descname"><span class="pre">UF2_MAGIC_START0</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">171066965</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_START0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_START1">
+<span class="sig-name descname"><span class="pre">UF2_MAGIC_START1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2656915799</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_START1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor._add_signature">
+<span class="sig-name descname"><span class="pre">_add_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/picosign/infrastructure/subprocessor.html#SubProcessor._add_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor._add_signature" title="Link to this definition">¶</a></dt>
+<dd><p>Embeds textual signature into the padding of the first UF2 block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> – Path to the input UF2 file.</p></li>
+<li><p><strong>output_file</strong> – Path to the output UF2 file (or None for in-place).</p></li>
+<li><p><strong>signature_text</strong> – Signature string to embed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (success flag, stdout message, stderr message).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor._logger">
+<span class="sig-name descname"><span class="pre">_logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ILogger</span></em><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor._logger" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor._read_signature">
+<span class="sig-name descname"><span class="pre">_read_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uf2_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/picosign/infrastructure/subprocessor.html#SubProcessor._read_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor._read_signature" title="Link to this definition">¶</a></dt>
+<dd><p>Reads and verifies signature from the first UF2 block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uf2_file</strong> – Path to the UF2 file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (success flag, stdout message, stderr message).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.is_initialized">
+<span class="sig-name descname"><span class="pre">is_initialized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/picosign/infrastructure/subprocessor.html#SubProcessor.is_initialized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.is_initialized" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if the subprocessor is initialized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the subprocessor is initialized, False otherwise.</p>
+</dd>
+<dt class="field-even">Exceptions<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="picosign.infrastructure.subprocessor.SubProcessor.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/picosign/infrastructure/subprocessor.html#SubProcessor.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#picosign.infrastructure.subprocessor.SubProcessor.run" title="Link to this definition">¶</a></dt>
+<dd><p>Executes the UF2 sub-process based on the action/command parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> – The command parameters mapping.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Return code, stdout and stderr messages.</p>
+</dd>
+<dt class="field-odd">Exceptions<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">picosign.infrastructure.subprocessor module</a><ul>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor"><code class="docutils literal notranslate"><span class="pre">SubProcessor</span></code></a><ul>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.BLOCK_SIZE"><code class="docutils literal notranslate"><span class="pre">SubProcessor.BLOCK_SIZE</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.CUSTOM_MARKER_HEADER"><code class="docutils literal notranslate"><span class="pre">SubProcessor.CUSTOM_MARKER_HEADER</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.MAX_SIG_LEN"><code class="docutils literal notranslate"><span class="pre">SubProcessor.MAX_SIG_LEN</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.PADDING_END"><code class="docutils literal notranslate"><span class="pre">SubProcessor.PADDING_END</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.PADDING_START"><code class="docutils literal notranslate"><span class="pre">SubProcessor.PADDING_START</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_END"><code class="docutils literal notranslate"><span class="pre">SubProcessor.UF2_MAGIC_END</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_START0"><code class="docutils literal notranslate"><span class="pre">SubProcessor.UF2_MAGIC_START0</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.UF2_MAGIC_START1"><code class="docutils literal notranslate"><span class="pre">SubProcessor.UF2_MAGIC_START1</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor._add_signature"><code class="docutils literal notranslate"><span class="pre">SubProcessor._add_signature()</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor._logger"><code class="docutils literal notranslate"><span class="pre">SubProcessor._logger</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor._read_signature"><code class="docutils literal notranslate"><span class="pre">SubProcessor._read_signature()</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.is_initialized"><code class="docutils literal notranslate"><span class="pre">SubProcessor.is_initialized()</span></code></a></li>
+<li><a class="reference internal" href="#picosign.infrastructure.subprocessor.SubProcessor.run"><code class="docutils literal notranslate"><span class="pre">SubProcessor.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="picosign.infrastructure.command.sign_command_executor.html"
+                          title="previous chapter">picosign.infrastructure.command.sign_command_executor module</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="picosign.setup.html"
+                          title="next chapter">picosign.setup package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/picosign.infrastructure.subprocessor.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="picosign.setup.html" title="picosign.setup package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="picosign.infrastructure.command.sign_command_executor.html" title="picosign.infrastructure.command.sign_command_executor module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">picosign https://github.com/vroncevic/picosign/releases documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >picosign</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="picosign.html" >picosign package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="picosign.infrastructure.html" >picosign.infrastructure package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">picosign.infrastructure.subprocessor module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Vladimir Roncevic &lt;elektron.ronca@gmail.com&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>
