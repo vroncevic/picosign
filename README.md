@@ -1,6 +1,6 @@
 # Sign and verify RPI PICO UF2 firmware binaries
 
-<img align="right" src="https://raw.githubusercontent.com/vroncevic/picosign/dev/docs/psf-logo-alpha.png" width="20%">
+<img align="right" src="https://raw.githubusercontent.com/vroncevic/picosign/dev/docs/picosign_logo.png" width="25%">
 
 **picosign** is a Python boot tool for signing and verifying Raspberry Pi Pico UF2 firmware binaries.
 
